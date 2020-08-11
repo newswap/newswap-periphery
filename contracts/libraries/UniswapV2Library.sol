@@ -1,6 +1,7 @@
 pragma solidity >=0.5.0;
 
-import '@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol';
+import '../../../newswap-core/contracts/interfaces/IUniswapV2Pair.sol';
+// import '@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol';
 
 import "./SafeMath.sol";
 
@@ -21,7 +22,8 @@ library UniswapV2Library {
                 hex'ff',
                 factory,
                 keccak256(abi.encodePacked(token0, token1)),
-                hex'96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f' // init code hash
+                hex'0775be267ceacf495974e7416fa6733ccb99bb85f279e1271cbc867d299bfe18' // init code hash truffle编译UniswapV2Pair版本，放不同项目也不一样 TODO ?
+                // hex'96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f' // init code hash waffle编译UniswapV2Pair版本
             ))));
     }
 

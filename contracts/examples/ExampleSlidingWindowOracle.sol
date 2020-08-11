@@ -1,8 +1,11 @@
 pragma solidity =0.6.6;
 
-import '@uniswap/v2-core/contracts/interfaces/IUniswapV2Factory.sol';
-import '@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol';
-import '@uniswap/lib/contracts/libraries/FixedPoint.sol';
+import '../../../newswap-core/contracts/interfaces/IUniswapV2Factory.sol';
+import '../../../newswap-core/contracts/interfaces/IUniswapV2Pair.sol';
+import '../../../newswap-lib/contracts/libraries/FixedPoint.sol';
+// import '@uniswap/v2-core/contracts/interfaces/IUniswapV2Factory.sol';
+// import '@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol';
+// import '@uniswap/lib/contracts/libraries/FixedPoint.sol';
 
 import '../libraries/SafeMath.sol';
 import '../libraries/UniswapV2Library.sol';
