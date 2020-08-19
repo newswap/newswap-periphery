@@ -1,21 +1,29 @@
 const Migrations = artifacts.require("Migrations");
-const WETH9 = artifacts.require("WETH9");
+const WNEW9 = artifacts.require("WNEW9");
 const UniswapV2Router02 = artifacts.require("UniswapV2Router02");
 
-module.exports = function (deployer, network, accounts) {
+module.exports = async function (deployer, network, accounts) {
   console.log("accounts[0]:"+accounts[0]);
-  deployer.deploy(Migrations);
+  await deployer.deploy(Migrations);
 
-  // uniswapV2FactoryAddress 改成本地部署
-  var uniswapV2FactoryAddress = "0x08420dF55D008Cdfa929E7b7159f468817ce11e4"; //本地truffle重启需要修改 
   if(network == "devnet"){
-    uniswapV2FactoryAddress = "0x999A9b54Dc8Ac3b9E7012800DF645068fC6ae288";
+    console.log("deploy devnet");
+    var uniswapV2FactoryAddress = "0xe8b77580c98c21CCC454707a9253215A6cCDfa4F";
+    var wNEWAddress = "0x592685288531A4433005929561C8a0C4BdcC98D0";
+    await deployer.deploy(UniswapV2Router02, uniswapV2FactoryAddress, wNEWAddress);
+
+  } else if(network == "testnet"){
+    console.log("deploy testnet");
+    var uniswapV2FactoryAddress = "0xd868f30Ae37591C342324f1Be44071f1852BAa10";
+    var wNEWAddress = "0x6bb8F925c8474B7CbB793f557AD0aaa25552D9c2";
+    await deployer.deploy(UniswapV2Router02, uniswapV2FactoryAddress, wNEWAddress);
+
+  } else { //development
+    console.log("deploy development");
+    var uniswapV2FactoryAddress = "0x6c776dF2d9EF8C02f69D43F32C8aD9b89055A169"; //本地truffle重启需要修改 
+    var wNEW = await deployer.deploy(WNEW9);
+    console.log("wETH:"+ wNEW.address);
+    await deployer.deploy(UniswapV2Router02, uniswapV2FactoryAddress, wNEW.address);
   }
 
-  console.log("uniswapV2Factory:" + uniswapV2FactoryAddress);
-  deployer.deploy(WETH9).then(function (instance) {
-    registryImplAddress = instance.address;
-
-    return deployer.deploy(UniswapV2Router02, uniswapV2FactoryAddress, instance.address);
-  });
 };

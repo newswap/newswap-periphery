@@ -5,7 +5,7 @@ const NRC6 = artifacts.require("NRC6");
 const IUniswapV2Factory = artifacts.require("IUniswapV2Factory");
 const IUniswapV2Pair = artifacts.require("IUniswapV2Pair");
 const UniswapV2Router02 = artifacts.require("UniswapV2Router02");
-const WETH9 = artifacts.require("WETH9");
+const WNEW9 = artifacts.require("WNEW9");
 
 let MT001, MT002, MT003;
 let uniswapV2Factory, uniswapV2Router02, wETH;
@@ -18,11 +18,11 @@ contract('SWAP', (accounts) => {
 
   it('init', async () => {
    // newchain devnet环境
-    // uniswapV2Factory = await IUniswapV2Factory.at("");
     // uniswapV2Router02 = await UniswapV2Router02.at("");
     uniswapV2Router02 = await UniswapV2Router02.deployed();
     var uniswapV2FactoryAddress = await uniswapV2Router02.factory();
     uniswapV2Factory = await IUniswapV2Factory.at(uniswapV2FactoryAddress);  
+    console.log("uniswapV2FactoryAddress:"+uniswapV2FactoryAddress);
 
     // deploy tokens
     MT001 = await NRC6.new("My Token 001", "MT001", 18, web3.utils.toWei("1000", 'ether'), accounts[0], {from: accounts[0]});
@@ -31,12 +31,13 @@ contract('SWAP', (accounts) => {
     console.log("mt001/002/003地址：" + MT001.address + "---" + MT002.address + "---" + MT003.address);
 
     var wETHAddress = await uniswapV2Router02.WETH();
-    wETH = await WETH9.at(wETHAddress);
+    console.log("wETHAddress:"+wETHAddress);
+    wETH = await WNEW9.at(wETHAddress);
 
     var number = await web3.eth.getBlockNumber();
-    // console.log(number);
+    console.log(number);
     var block = await web3.eth.getBlock(number);
-    // console.log(block.timestamp); 
+    console.log(block.timestamp); 
     deadline = block.timestamp * 2;
   });
 
@@ -65,10 +66,14 @@ contract('SWAP', (accounts) => {
     mt001And002PairAddress = await uniswapV2Factory.getPair(MT001.address, MT002.address);
     console.log("mt001And002PairAddress: " + mt001And002PairAddress);
 
+    var pairFor = await uniswapV2Router02.pairFor(MT001.address, MT002.address);
+    assert.equal(mt001And002PairAddress,pairFor)
+
     var uniswapV2Pair = await IUniswapV2Pair.at(mt001And002PairAddress);
     const reserves = await uniswapV2Pair.getReserves();
-    assert.equal(Number(reserves[0]), MT001.address < MT002.address ? Number(token1Amount) : Number(token2Amount));
-    assert.equal(Number(reserves[1]), MT001.address < MT002.address ? Number(token2Amount) : Number(token1Amount));
+    const token0 = await uniswapV2Pair.token0();
+    assert.equal(Number(reserves[0]), MT001.address == token0 ? Number(token1Amount) : Number(token2Amount));
+    assert.equal(Number(reserves[1]), MT001.address == token0 ? Number(token2Amount) : Number(token1Amount));
   });
 
   it('addLiquidity for MT002AndMT003Pair', async () => {
@@ -87,8 +92,9 @@ contract('SWAP', (accounts) => {
 
     var uniswapV2Pair = await IUniswapV2Pair.at(mt002And003PairAddress);
     const reserves = await uniswapV2Pair.getReserves();
-    assert.equal(Number(reserves[0]), MT002.address < MT003.address ? Number(token1Amount) : Number(token2Amount));
-    assert.equal(Number(reserves[1]), MT002.address < MT003.address ? Number(token2Amount) : Number(token1Amount));
+    const token0 = await uniswapV2Pair.token0();
+    assert.equal(Number(reserves[0]), MT002.address == token0 ? Number(token1Amount) : Number(token2Amount));
+    assert.equal(Number(reserves[1]), MT002.address == token0 ? Number(token2Amount) : Number(token1Amount));
   });
 
   it('addLiquidity for ETHAndMT001Pair', async () => {
@@ -110,8 +116,9 @@ contract('SWAP', (accounts) => {
 
     var uniswapV2Pair = await IUniswapV2Pair.at(ethAndMT001PairAddress);
     const reserves = await uniswapV2Pair.getReserves();
-    assert.equal(Number(reserves[0]), MT001.address < wETH.address ? Number(token1Amount) : Number(ethAmount));
-    assert.equal(Number(reserves[1]), MT001.address < wETH.address ? Number(ethAmount) : Number(token1Amount));
+    const token0 = await uniswapV2Pair.token0();
+    assert.equal(Number(reserves[0]), MT001.address == token0 ? Number(token1Amount) : Number(ethAmount));
+    assert.equal(Number(reserves[1]), MT001.address == token0 ? Number(ethAmount) : Number(token1Amount));
   });
 
     ///////////////////////////////////////////////////
@@ -129,7 +136,6 @@ contract('SWAP', (accounts) => {
     // console.log("blockTimestampLast: " + Number(reserves[2]));
 
     var token0 = await uniswapV2Pair.token0();
-    console.log(token0);
     var reserveMT001 = MT001.address == token0 ? reserves[0] : reserves[1];
     var reserveMT002 = MT001.address == token0 ? reserves[1] : reserves[0];
     console.log("reserveMT001: " + Number(reserveMT001)); //50
