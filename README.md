@@ -1,8 +1,6 @@
-# Uniswap V2
-# Newswap-periphery
-In-depth documentation on Uniswap V2 is available at [uniswap.org](https://uniswap.org/docs).
+# Newswap 
 
-The built contract artifacts can be browsed via [unpkg.com](https://unpkg.com/browse/@uniswap/v2-periphery@latest/).
+#### [合约调用示例](https://gitlab.newtonproject.org/hep/newswap-periphery/-/blob/develop/docs/newswap-example.md)
 
 # Local Development
 
