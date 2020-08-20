@@ -1,8 +1,9 @@
 # Newswap合约调用示例
 
-Newswap是基于NewChain的去中心化代币交换协议，旨在促进NEW和NRC6代币数字资产之间的**自动**兑换交易。Newswap移植至[Uniswap](https://uniswap.org/)，为保证合约安全性，完全复用Uniswap的合约代码，所以合约中出现的ETH在Newswap中代表NEW。
+Newswap是基于NewChain的去中心化代币交换协议，旨在促进NEW和NRC6代币数字资产之间的**自动**兑换交易。  
+Newswap移植至[Uniswap](https://uniswap.org/)，为保证合约安全性，完全复用Uniswap的合约代码，所以合约中出现的ETH在Newswap中代表NEW。
 
-Newswap合约主要以下4个：
+**Newswap合约：**
 
 1. UniswapV2Factory
 
@@ -20,19 +21,19 @@ Newswap合约主要以下4个：
 
   Newswap用于接收New的类NRC6合约，用户兑换或添加流动性关联NEW时，使用WNEW合约地址。
 
-合约的文档、地址、abi(&bin)如下：
+**合约文档、地址、abi(&bin)如下：**
 
 - UniswapV2Factory
   - 接口文档：https://uniswap.org/docs/v2/smart-contracts/factory/
   - devnet地址：0x999A9b54Dc8Ac3b9E7012800DF645068fC6ae288
-  - [abi&bin]
+  - [abi&bin](https://gitlab.newtonproject.org/hep/newswap-periphery/-/blob/develop/generate/UniswapV2FactoryABI.json)
 - UniswapV2Pair
   - 接口文档：https://uniswap.org/docs/v2/smart-contracts/pair/
-  - [abi&bin]
+  - [abi&bin](https://gitlab.newtonproject.org/hep/newswap-periphery/-/blob/develop/generate/UniswapV2PairABI.json)
 - UniswapV2Router02
   - 接口文档：https://uniswap.org/docs/v2/smart-contracts/router02/
   - devnet地址：0x9AC00f1202Cc2c7fC9FCe7f8e19000083E1b97F8
-  - [abi&bin]
+  - [abi&bin](https://gitlab.newtonproject.org/hep/newswap-periphery/-/blob/develop/generate/UniswapV2Router02ABI.json)
 - WNEW
   - devnet地址：0x202B1174Cb34ee1b3c36747901F16E8A29031684
   - 文档和bin可使用NRC6合约
