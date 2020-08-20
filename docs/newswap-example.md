@@ -40,7 +40,7 @@ Newswap移植至[Uniswap](https://uniswap.org/)，为保证合约安全性，完
 
 ## 添加流动性
 
-Newton2.0当前产品设计只支持添加NEW和NRC6交易对的流动性，可通过`UniswapV2Router02.addLiquidityETH`函数添加NEW和NRC6交易对的流动性。
+Newton2.0当前产品设计只支持添加NEW和NRC6交易对的流动性，可通过`UniswapV2Router02.addLiquidityETH`函数添加NEW和NRC6交易对的流动性。用户为交易对添加流动性后，将获得该交易对的流动性代币，流动性代币数量由提供的流动性占交易对中资金比例决定。
 
 ### 交易对首次添加流动性
 
