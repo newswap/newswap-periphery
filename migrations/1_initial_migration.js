@@ -20,7 +20,7 @@ module.exports = async function (deployer, network, accounts) {
 
   } else { //development
     console.log("deploy development");
-    var uniswapV2FactoryAddress = "0x6c776dF2d9EF8C02f69D43F32C8aD9b89055A169"; //本地truffle重启需要修改 
+    var uniswapV2FactoryAddress = "0x0BE037cc9A145c9430d8E51CbcA0edc4Ac4fccC5"; //本地truffle重启需要修改 
     var wNEW = await deployer.deploy(WNEW9);
     console.log("wETH:"+ wNEW.address);
     await deployer.deploy(UniswapV2Router02, uniswapV2FactoryAddress, wNEW.address);
