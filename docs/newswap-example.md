@@ -118,7 +118,7 @@ Newton2.0当前产品设计只支持添加NEW和NRC6交易对的流动性，可�
    const totalSupply = await uniswapV2Pair.totalSupply()
    
    //Math.min为取两者最小值
-   liquidity = Math.min(nrc6Amount.mul(_totalSupply) / nrc6Reserve, newAmount.mul(_totalSupply) / newReserve);
+   liquidity = Math.min(nrc6Amount.mul(totalSupply) / nrc6Reserve, newAmount.mul(totalSupply) / newReserve);
    ```
 
    nrc6Amount和newAmount为准备添加的NRC6和NEW数量(单位为wei，如1NEW为10**18)，nrc6Reserve和newReserve为交易对中NRC6和NEW数量。
