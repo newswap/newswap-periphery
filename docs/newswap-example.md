@@ -86,6 +86,12 @@ Newton2.0当前产品设计只支持添加NEW和NRC6交易对的流动性，可�
    const newAmount = web3.utils.toWei("5", 'ether');
    const tokenAmount = await uniswapV2Router02.quote(newAmount, wNEWReserve, tokenReserve);
    ```
+   
+   tokenAmount也可不通过uniswapV2Router02.quote获取，可以自己计算，计算公式为
+   
+   ```
+   amountB = amountA.mul(reserveB) / reserveA;
+   ```
 
 ### 流动性代币分配算法
 
