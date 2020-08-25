@@ -87,6 +87,48 @@ Newton2.0当前产品设计只支持添加NEW和NRC6交易对的流动性，可�
    const tokenAmount = await uniswapV2Router02.quote(newAmount, wNEWReserve, tokenReserve);
    ```
 
+### 流动性代币分配算法
+
+用户为交易对添加NRC6和NEW后，将获得该交易对的流动性代币，流动性代币也是一种NRC6(UniswapV2Pair继承了NRC6)，精度为18，分配流动性代币数量分2种情况：
+
+1. 交易对首次被添加流动性(uniswapV2Pair.totalSupply=0)，添加NRC6和NEW的用户获得的流动性代币数量为
+
+   ```
+   liquidity = Math.sqrt(nrc6Amount.mul(newAmount)).sub(1000);
+   ```
+
+   nrc6Amount和newAmount为准备添加的NRC6和NEW数量(单位为wei，如1NEW为10**18)，首次添加流动性将1000分配给address(0)，保证交易对添加流动性后不会再为空(因为流动性代币精度是18，1个流动性代币对应的数值为10的18次方，所以1000数量极小)。
+
+   因首次添加，添加成功后用户当前占交易对流动性比例约等于100%。
+
+2. 当前交易对已有流动性，添加NRC6和NEW的用户获得的流动性代币数量为
+
+   ```
+   //获得交易对地址
+   const pairAddress = await uniswapV2Factory.getPair(NRC6.address, WNEW.address);
+   //交易对合约
+   const uniswapV2Pair = await IUniswapV2Pair.at(pairAddress);
+   //交易对当前流动性代币总数
+   const totalSupply = await uniswapV2Pair.totalSupply()
+   
+   //Math.min为取两者最小值
+   liquidity = Math.min(nrc6Amount.mul(_totalSupply) / nrc6Reserve, newAmount.mul(_totalSupply) / newReserve);
+   ```
+
+   nrc6Amount和newAmount为准备添加的NRC6和NEW数量(单位为wei，如1NEW为10**18)，nrc6Reserve和newReserve为交易对中NRC6和NEW数量。
+
+   用户添加成功后，当前添加的资产对应流动性代币占比为 liquidity/(liquidity+totalSupply)。
+
+   
+
+查询用户指定交易对的流动性代币数量
+
+```
+const liquidity = await uniswapV2Pair.balanceOf(accountAddress)
+```
+
+
+
 ## 移除流动性
 
 用户为交易对添加流动性后，将获得该交易对的流动性代币，移除流动性即根据需要销毁的流动性代币数量占比返还交易对中资产，通过`UniswapV2Router02.removeLiquidityETH`函数移除NEW-NRC6交易对的流动性。

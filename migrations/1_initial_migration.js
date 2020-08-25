@@ -8,8 +8,8 @@ module.exports = async function (deployer, network, accounts) {
 
   if(network == "devnet"){
     console.log("deploy devnet");
-    var uniswapV2FactoryAddress = "0xe8b77580c98c21CCC454707a9253215A6cCDfa4F";
-    var wNEWAddress = "0x592685288531A4433005929561C8a0C4BdcC98D0";
+    var uniswapV2FactoryAddress = "0x999A9b54Dc8Ac3b9E7012800DF645068fC6ae288";
+    var wNEWAddress = "0x202B1174Cb34ee1b3c36747901F16E8A29031684";
     await deployer.deploy(UniswapV2Router02, uniswapV2FactoryAddress, wNEWAddress);
 
   } else if(network == "testnet"){
@@ -20,10 +20,12 @@ module.exports = async function (deployer, network, accounts) {
 
   } else { //development
     console.log("deploy development");
-    var uniswapV2FactoryAddress = "0x0BE037cc9A145c9430d8E51CbcA0edc4Ac4fccC5"; //本地truffle重启需要修改 
-    var wNEW = await deployer.deploy(WNEW9);
-    console.log("wETH:"+ wNEW.address);
-    await deployer.deploy(UniswapV2Router02, uniswapV2FactoryAddress, wNEW.address);
+    var uniswapV2FactoryAddress = "0xabc3C00EA538c6d4db0C39a9196c331A1bBe93A8"; //本地truffle重启需要修改 
+    // var wNEW = await deployer.deploy(WNEW9);
+    // var wNEWAddress = wNEW.address;
+    var wNEWAddress = "0xC76b55AA1b5dce6577614891F539C263fEF2324F";
+    console.log("wETH:"+ wNEWAddress);
+    await deployer.deploy(UniswapV2Router02, uniswapV2FactoryAddress, wNEWAddress);
   }
 
 };

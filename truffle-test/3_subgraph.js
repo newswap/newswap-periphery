@@ -41,7 +41,7 @@ contract('Subgraph', (accounts) => {
     /////////////////////////////////////////////////// 
   it('addLiquidity for ETHAndMT001Pair', async () => {
     const tokenAmount = web3.utils.toWei("5000", 'ether');
-    const ethAmount = web3.utils.toWei("10", 'ether');
+    const ethAmount = web3.utils.toWei("1", 'ether');
 
     ethAndMT001PairAddress = await uniswapV2Factory.getPair(MT001.address, wETH.address);
     console.log("ethAndMT001PairAddress: " + ethAndMT001PairAddress);
@@ -62,7 +62,7 @@ contract('Subgraph', (accounts) => {
 
   it('addLiquidity for ETHAndMT002Pair', async () => {
     const tokenAmount = web3.utils.toWei("1000", 'ether');
-    const ethAmount = web3.utils.toWei("10", 'ether');
+    const ethAmount = web3.utils.toWei("1", 'ether');
 
     await MT002.approve(uniswapV2Router02.address, tokenAmount);
     // 如果没有交易对此处会自动创建
@@ -83,13 +83,13 @@ contract('Subgraph', (accounts) => {
 
     var uniswapV2Pair = await IUniswapV2Pair.at(ethAndMT002PairAddress);
     // 确定eth的量，查询需要输入的token量
-    const ethAmount = web3.utils.toWei("5", 'ether');
+    const ethAmount = web3.utils.toWei("1", 'ether');
     const reserves = await uniswapV2Pair.getReserves();
     const tokenReserve = MT002.address < wETH.address ? reserves[0] : reserves[1];
     const wETHReserve = MT002.address < wETH.address? reserves[1] : reserves[0];
     // 获得需要的token量
     var tokenAmount = await uniswapV2Router02.quote(ethAmount, wETHReserve, tokenReserve);
-    assert.equal(Number(tokenAmount)/1e18, 500);
+    assert.equal(Number(tokenAmount)/1e18, 1000);
 
     await MT002.approve(uniswapV2Router02.address, tokenAmount);
     // 如果没有交易对此处会自动创建
@@ -108,7 +108,7 @@ contract('Subgraph', (accounts) => {
 
   it('1.swapExactETHForTokens: ETH->MT001', async () => {
     //确定输入的ETH数量，获得mt001为输出， 滑点设置为最少输出量
-    const swapETHAmount = web3.utils.toWei("1", 'ether');
+    const swapETHAmount = web3.utils.toWei("0.1", 'ether');
 
     // 先查下下预计可以得到多少个
     var uniswapV2Pair = await IUniswapV2Pair.at(ethAndMT001PairAddress);
