@@ -1,7 +1,7 @@
 # Newswap合约调用示例
 
-Newswap是基于NewChain的去中心化代币交换协议，旨在促进NEW和NRC6代币数字资产之间的**自动**兑换交易。更多了解uniswap可看[Uniswap调研报告](https://gitlab.newtonproject.org/x-team/workspace/-/blob/master/liuyong/uniswap-report.pdf)  
-Newswap移植至[Uniswap](https://uniswap.org/)，为保证合约安全性，完全复用Uniswap的合约代码，所以合约中出现的ETH在Newswap中代表NEW。
+Newswap是基于NewChain的去中心化代币交换协议，旨在促进NEW和NRC6代币数字资产之间的**自动**兑换交易。  
+Newswap移植至[Uniswap](https://uniswap.org/)，为保证合约安全性，完全复用Uniswap的合约代码，所以合约中出现的ETH在Newswap中代表NEW。进一步了解uniswap可看[Uniswap调研报告](https://gitlab.newtonproject.org/x-team/workspace/-/blob/master/liuyong/uniswap-report.pdf) 。
 
 **Newswap合约：**
 
