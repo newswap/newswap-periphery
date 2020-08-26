@@ -59,7 +59,7 @@ Newton2.0当前产品设计只支持添加NEW和NRC6交易对的流动性，可�
    UniswapV2Router02.addLiquidityETH(NRC6.address, tokenAmount, 0, 0, accountAddress, deadline, {value: newAmount});
    ```
 
-   tokenAmount和newAmount为交易对添加的NRC6和NEW数量， deadline为交易最晚执行的block.timestamp(链当前时间戳加5分钟应该就够了，如block.timestamp+5*60)。
+   tokenAmount和newAmount为交易对添加的NRC6和NEW数量， deadline为交易最晚执行的block.timestamp(链当前时间戳加5分钟应该就够了，如block.timestamp+5*60)。`{value: newAmount}`为调用函数发送的NEW，前面都是函数的正常参数
 
 ### 交易对已有流动性
 
