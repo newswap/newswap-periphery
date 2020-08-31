@@ -98,8 +98,8 @@ contract('Subgraph', (accounts) => {
     var uniswapV2Pair = await IUniswapV2Pair.at(ethAndMT002PairAddress);
     const reserves2 = await uniswapV2Pair.getReserves();
     const token0 = await uniswapV2Pair.token0();
-    assert.equal(reserves2[0]/1e18, MT002.address == token0 ? 1500 :15);
-    assert.equal(reserves2[1]/1e18, MT002.address == token0 ? 15 : 1500);
+    assert.equal(reserves2[0]/1e18, MT002.address == token0 ? 2000 :2);
+    assert.equal(reserves2[1]/1e18, MT002.address == token0 ? 2 : 2000);
   });
 
   //   ///////////////////////////////////////////////////
@@ -288,6 +288,20 @@ contract('Subgraph', (accounts) => {
     console.log(balance/1e18);
     balance = await MT002.balanceOf.call(accounts[0]);
     console.log(balance/1e18);
+
+
+
+    console.log("ethAndMT001PairAddress 资产：")
+    var uniswapV2Pair1 = await IUniswapV2Pair.at(ethAndMT001PairAddress);
+    var reserves = await uniswapV2Pair1.getReserves();
+    console.log("reserve0: " + reserves[0]/1e18); 
+    console.log("reserve1: " + reserves[1]/1e18);
+
+    console.log("ethAndMT002PairAddress 资产：")
+    var uniswapV2Pair2 = await IUniswapV2Pair.at(ethAndMT002PairAddress);
+    var reserves = await uniswapV2Pair2.getReserves();
+    console.log("reserve0: " + reserves[0]/1e18); 
+    console.log("reserve1: " + reserves[1]/1e18); 
   });
 
 

@@ -81,14 +81,14 @@ contract('Liquidity', (accounts) => {
     var tx = await uniswapV2Factory.createPair(MT001.address, MT002.address);
     // console.log(tx);
     // console.log(tx.logs);
-    // var eventPairCreated= '0x' + abi.soliditySHA3(['string'], ["PairCreated(address,address,address,uint256)"]).toString("hex");
+    var eventPairCreated= '0x' + abi.soliditySHA3(['string'], ["PairCreated(address,address,address,uint256)"]).toString("hex");
     // // console.log(eventPairCreated);
-    // var log = tx.receipt.rawLogs.find(element => element.topics[0].match(eventPairCreated));
-    // // console.log(log);
-    // if(log){
-    //   var data = web3.eth.abi.decodeParameters(["address","uint256"],log.data);
-    //   console.log(data);         
-    // }
+    var log = tx.receipt.rawLogs.find(element => element.topics[0].match(eventPairCreated));
+    // console.log(log);
+    if(log){
+      var data = web3.eth.abi.decodeParameters(["address","uint256"],log.data);
+      console.log(data);         
+    }
 
     mt001And002PairAddress = await uniswapV2Factory.getPair(MT001.address, MT002.address);
     console.log("getPair:"+mt001And002PairAddress);
