@@ -36,7 +36,7 @@ Newswap移植至[Uniswap](https://uniswap.org/)，为保证合约安全性，完
   - [abi&bin](https://gitlab.newtonproject.org/hep/newswap-periphery/-/blob/develop/generate/UniswapV2Router02ABI.json)
 - WNEW
   - devnet地址：0x202B1174Cb34ee1b3c36747901F16E8A29031684
-  - 文档和bin可使用NRC6合约
+  - [abi&bin](https://gitlab.newtonproject.org/hep/newswap-periphery/-/blob/develop/generate/WNewABI.json)
 
 ## 添加流动性
 
