@@ -1,6 +1,7 @@
 # Newswap 
 
 #### [合约调用示例](https://gitlab.newtonproject.org/hep/newswap-periphery/-/blob/develop/docs/newswap-example.md)
+#### [ChangeLog](./CHANGELOG.md)
 
 # Local Development
 

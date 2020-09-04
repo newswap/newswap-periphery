@@ -15,14 +15,16 @@ let deadline;
 // TODO 用于子图数据测试～～～不需要token-token交易对，只关注new-token交易对！！
 contract('Subgraph', (accounts) => {
   it('init', async () => {
+    // uniswapV2Router02 = await UniswapV2Router02.at("0x9AC00f1202Cc2c7fC9FCe7f8e19000083E1b97F8");
     uniswapV2Router02 = await UniswapV2Router02.deployed();
+
     var uniswapV2FactoryAddress = await uniswapV2Router02.factory();
     uniswapV2Factory = await IUniswapV2Factory.at(uniswapV2FactoryAddress);  
     console.log("uniswapV2FactoryAddress:"+uniswapV2FactoryAddress);
 
     // deploy tokens
     MT001 = await NRC6.new("My Token 001", "MT001", 18, web3.utils.toWei("10000", 'ether'), accounts[0], {from: accounts[0]});
-    MT002 = await NRC6.new("My Token 002", "MT002", 18, web3.utils.toWei("10000", 'ether'), accounts[0], {from: accounts[0]});
+    MT002 = await NRC6.new("My Token 002", "My Token 002", 18, web3.utils.toWei("10000", 'ether'), accounts[0], {from: accounts[0]});
     console.log("mt001/002地址：" + MT001.address + "---" + MT002.address);
 
     var wETHAddress = await uniswapV2Router02.WETH();
