@@ -4,29 +4,34 @@ const UniswapV2Router02 = artifacts.require("UniswapV2Router02");
 
 module.exports = async function (deployer, network, accounts) {
   console.log("accounts[0]:"+accounts[0]);
-  // await deployer.deploy(Migrations);
+  await deployer.deploy(Migrations);
+  // await deployer.deploy(WNEW9);
+  // var wNEW = await WNEW9.deployed();
+  // var wNEWAddress = wNEW.address;
+  // console.log("wNEW:"+ wNEWAddress);
 
-  // TODO pair修改，新的router不用用于之前的factory，需重新部署，测试时指定router地址
-  // if(network == "devnet"){
-  //   console.log("deploy devnet");
-  //   var uniswapV2FactoryAddress = "0x999A9b54Dc8Ac3b9E7012800DF645068fC6ae288";
-  //   var wNEWAddress = "0x202B1174Cb34ee1b3c36747901F16E8A29031684";
-  //   await deployer.deploy(UniswapV2Router02, uniswapV2FactoryAddress, wNEWAddress);
+  // TODO 
+  if(network == "devnet"){
+    console.log("deploy devnet");
+    var uniswapV2FactoryAddress = "0x7F053946C99f6a17084e5aE1fd76587d43C4bb54";
+    var wNEWAddress = "0x2678Fb6e5AF58f7b520aCe2Cd3A4F476b771C6f2";
+    await deployer.deploy(UniswapV2Router02, uniswapV2FactoryAddress, wNEWAddress);
 
-  // } else if(network == "testnet"){
-  //   console.log("deploy testnet");
-  //   var uniswapV2FactoryAddress = "0xd868f30Ae37591C342324f1Be44071f1852BAa10";
-  //   var wNEWAddress = "0x6bb8F925c8474B7CbB793f557AD0aaa25552D9c2";
-  //   await deployer.deploy(UniswapV2Router02, uniswapV2FactoryAddress, wNEWAddress);
+  } else if(network == "testnet"){
+    console.log("deploy testnet");
+    var uniswapV2FactoryAddress = "0xd868f30Ae37591C342324f1Be44071f1852BAa10";
+    var wNEWAddress = "0x6bb8F925c8474B7CbB793f557AD0aaa25552D9c2";
+    await deployer.deploy(UniswapV2Router02, uniswapV2FactoryAddress, wNEWAddress);
 
-  // } else { //development
-  //   console.log("deploy development");
-  //   var uniswapV2FactoryAddress = "0x643868098759cb093b966b876DbEE5DA00CE2a68"; //本地truffle重启需要修改 
-  //   var wNEW = await deployer.deploy(WNEW9);
-  //   var wNEWAddress = wNEW.address;
-  //   // var wNEWAddress = "0x3F1A4f351A7f66bD988Bb5900CD34496ecCc5b62";
-  //   console.log("wETH:"+ wNEWAddress);
-  //   await deployer.deploy(UniswapV2Router02, uniswapV2FactoryAddress, wNEWAddress);
-  // }
+  } else { //development
+    console.log("deploy development");
+    var uniswapV2FactoryAddress = "0xeF68eC729A5aeD6067181e2E15436AEd19081228"; //本地truffle重启需要修改 
+    // await deployer.deploy(WNEW9);
+    // var wNEW = await WNEW9.deployed();
+    // var wNEWAddress = wNEW.address;
+    var wNEWAddress = "0x53d6188ccE03723e4954DCa87EF2dB28b72Bca18";
+    console.log("wNEW:"+ wNEWAddress);
+    await deployer.deploy(UniswapV2Router02, uniswapV2FactoryAddress, wNEWAddress);
+  }
 
 };

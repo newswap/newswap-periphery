@@ -15,16 +15,17 @@ let deadline;
 // TODO 用于子图数据测试～～～不需要token-token交易对，只关注new-token交易对！！
 contract('Subgraph', (accounts) => {
   it('init', async () => {
-    // uniswapV2Router02 = await UniswapV2Router02.at("0x9AC00f1202Cc2c7fC9FCe7f8e19000083E1b97F8");
+    // uniswapV2Router02 = await UniswapV2Router02.at("0xf8B229608f3f328d717bC90C1446409CDFEC9C69");
     uniswapV2Router02 = await UniswapV2Router02.deployed();
+    console.log("uniswapV2Router02:"+uniswapV2Router02.address);
 
     var uniswapV2FactoryAddress = await uniswapV2Router02.factory();
     uniswapV2Factory = await IUniswapV2Factory.at(uniswapV2FactoryAddress);  
     console.log("uniswapV2FactoryAddress:"+uniswapV2FactoryAddress);
 
     // deploy tokens
-    MT001 = await NRC6.new("My Token 001", "MT001", 18, web3.utils.toWei("10000", 'ether'), accounts[0], {from: accounts[0]});
-    MT002 = await NRC6.new("My Token 002", "My Token 002", 18, web3.utils.toWei("10000", 'ether'), accounts[0], {from: accounts[0]});
+    MT001 = await NRC6.new("My Token", "MT", 18, web3.utils.toWei("10000", 'ether'), accounts[0], {from: accounts[0]});
+    MT002 = await NRC6.new("DAO", "DAO", 18, web3.utils.toWei("10000", 'ether'), accounts[0], {from: accounts[0]});
     console.log("mt001/002地址：" + MT001.address + "---" + MT002.address);
 
     var wETHAddress = await uniswapV2Router02.WETH();
@@ -43,7 +44,7 @@ contract('Subgraph', (accounts) => {
     /////////////////////////////////////////////////// 
   it('addLiquidity for ETHAndMT001Pair', async () => {
     const tokenAmount = web3.utils.toWei("5000", 'ether');
-    const ethAmount = web3.utils.toWei("1", 'ether');
+    const ethAmount = web3.utils.toWei("100", 'ether');
 
     ethAndMT001PairAddress = await uniswapV2Factory.getPair(MT001.address, wETH.address);
     console.log("ethAndMT001PairAddress: " + ethAndMT001PairAddress);
@@ -54,6 +55,9 @@ contract('Subgraph', (accounts) => {
 
     ethAndMT001PairAddress = await uniswapV2Factory.getPair(MT001.address, wETH.address);
     console.log("ethAndMT001PairAddress: " + ethAndMT001PairAddress);
+    // TODO pairFor需要删除
+    var pairFor = await uniswapV2Router02.pairFor(MT001.address, wETH.address);
+    assert.equal(pairFor, ethAndMT001PairAddress);
 
     var uniswapV2Pair = await IUniswapV2Pair.at(ethAndMT001PairAddress);
     const reserves = await uniswapV2Pair.getReserves();
@@ -64,13 +68,16 @@ contract('Subgraph', (accounts) => {
 
   it('addLiquidity for ETHAndMT002Pair', async () => {
     const tokenAmount = web3.utils.toWei("1000", 'ether');
-    const ethAmount = web3.utils.toWei("1", 'ether');
+    const ethAmount = web3.utils.toWei("100", 'ether');
 
     await MT002.approve(uniswapV2Router02.address, tokenAmount);
     // 如果没有交易对此处会自动创建
     var tx = await uniswapV2Router02.addLiquidityETH(MT002.address, tokenAmount, 0, 0, accounts[0], deadline, {value: ethAmount, gas: 3999999});
     ethAndMT002PairAddress = await uniswapV2Factory.getPair(MT002.address, wETH.address);
     console.log("ethAndMT002PairAddress: " + ethAndMT002PairAddress);
+    // TODO pairFor需要删除
+    var pairFor = await uniswapV2Router02.pairFor(MT002.address, wETH.address);
+    assert.equal(pairFor, ethAndMT002PairAddress);
 
     var uniswapV2Pair = await IUniswapV2Pair.at(ethAndMT002PairAddress);
     const reserves = await uniswapV2Pair.getReserves();
@@ -85,7 +92,7 @@ contract('Subgraph', (accounts) => {
 
     var uniswapV2Pair = await IUniswapV2Pair.at(ethAndMT002PairAddress);
     // 确定eth的量，查询需要输入的token量
-    const ethAmount = web3.utils.toWei("1", 'ether');
+    const ethAmount = web3.utils.toWei("100", 'ether');
     const reserves = await uniswapV2Pair.getReserves();
     const tokenReserve = MT002.address < wETH.address ? reserves[0] : reserves[1];
     const wETHReserve = MT002.address < wETH.address? reserves[1] : reserves[0];
@@ -100,8 +107,8 @@ contract('Subgraph', (accounts) => {
     var uniswapV2Pair = await IUniswapV2Pair.at(ethAndMT002PairAddress);
     const reserves2 = await uniswapV2Pair.getReserves();
     const token0 = await uniswapV2Pair.token0();
-    assert.equal(reserves2[0]/1e18, MT002.address == token0 ? 2000 :2);
-    assert.equal(reserves2[1]/1e18, MT002.address == token0 ? 2 : 2000);
+    assert.equal(reserves2[0]/1e18, MT002.address == token0 ? 2000 :200);
+    assert.equal(reserves2[1]/1e18, MT002.address == token0 ? 200 : 2000);
   });
 
   //   ///////////////////////////////////////////////////
