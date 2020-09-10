@@ -17,6 +17,6 @@ devnet部署新的合约，地址全部更新：
 
 
 ## 2020.9.4
-添加NEW预言机合约NewPriceInUSD：
+添加NEW预言机合约NewPriceOracle：
 - devnet地址：0x32f7bE067b0B557e1f5b6BD6D4D2B6d99E34f2A2
-- [abi&bin](https://gitlab.newtonproject.org/hep/newswap-periphery/-/blob/develop/generate/NewPriceInUSD.json)
+- [abi&bin](https://gitlab.newtonproject.org/hep/newswap-periphery/-/blob/develop/generate/NewPriceOracle.json)

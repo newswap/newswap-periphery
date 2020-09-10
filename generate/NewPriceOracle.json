@@ -1,5 +1,5 @@
 {
-  "contractName": "NewPriceInUSD",
+  "contractName": "newPriceOracle",
   "abi": [
     {
       "inputs": [],

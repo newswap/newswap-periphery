@@ -10,7 +10,6 @@ module.exports = async function (deployer, network, accounts) {
   // var wNEWAddress = wNEW.address;
   // console.log("wNEW:"+ wNEWAddress);
 
-  // TODO 
   if(network == "devnet"){
     console.log("deploy devnet");
     var uniswapV2FactoryAddress = "0x7F053946C99f6a17084e5aE1fd76587d43C4bb54";

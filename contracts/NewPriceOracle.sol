@@ -1,6 +1,6 @@
 pragma solidity =0.6.6;
 
-contract NewPriceInUSD {
+contract NewPriceOracle {
     address public owner;
     mapping(address => bool) public sources;
     mapping(address => Datum) public data;
