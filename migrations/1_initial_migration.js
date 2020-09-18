@@ -3,12 +3,12 @@ const WNEW9 = artifacts.require("WNEW9");
 const UniswapV2Router02 = artifacts.require("UniswapV2Router02");
 
 module.exports = async function (deployer, network, accounts) {
-  console.log("accounts[0]:"+accounts[0]);
-  await deployer.deploy(Migrations);
+  // console.log("accounts[0]:"+accounts[0]);
+  // await deployer.deploy(Migrations);
   // await deployer.deploy(WNEW9);
-  // var wNEW = await WNEW9.deployed();
-  // var wNEWAddress = wNEW.address;
-  // console.log("wNEW:"+ wNEWAddress);
+  // // var wNEW = await WNEW9.deployed();
+  // // var wNEWAddress = wNEW.address;
+  // // console.log("wNEW:"+ wNEWAddress);
 
   if(network == "devnet"){
     console.log("deploy devnet");
@@ -18,8 +18,8 @@ module.exports = async function (deployer, network, accounts) {
 
   } else if(network == "testnet"){
     console.log("deploy testnet");
-    var uniswapV2FactoryAddress = "0xd868f30Ae37591C342324f1Be44071f1852BAa10";
-    var wNEWAddress = "0x6bb8F925c8474B7CbB793f557AD0aaa25552D9c2";
+    var uniswapV2FactoryAddress = "0xCe59bbCFe029789af935DFF388Fb65771e2845B2";
+    var wNEWAddress = "0x55D1cf675D4618B7ba371FAA3Ff4f559D0f5c6d9";
     await deployer.deploy(UniswapV2Router02, uniswapV2FactoryAddress, wNEWAddress);
 
   } else { //development

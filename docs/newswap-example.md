@@ -25,17 +25,17 @@ Newswap移植至[Uniswap](https://uniswap.org/)，为保证合约安全性，完
 
 - UniswapV2Factory
   - 接口文档：https://uniswap.org/docs/v2/smart-contracts/factory/
-  - devnet地址：0x999A9b54Dc8Ac3b9E7012800DF645068fC6ae288
+  - devnet地址：0x7F053946C99f6a17084e5aE1fd76587d43C4bb54
   - [abi&bin](https://gitlab.newtonproject.org/hep/newswap-periphery/-/blob/develop/generate/UniswapV2FactoryABI.json)
 - UniswapV2Pair
   - 接口文档：https://uniswap.org/docs/v2/smart-contracts/pair/
   - [abi&bin](https://gitlab.newtonproject.org/hep/newswap-periphery/-/blob/develop/generate/UniswapV2PairABI.json)
 - UniswapV2Router02
   - 接口文档：https://uniswap.org/docs/v2/smart-contracts/router02/
-  - devnet地址：0x9AC00f1202Cc2c7fC9FCe7f8e19000083E1b97F8
+  - devnet地址：0xf8B229608f3f328d717bC90C1446409CDFEC9C69
   - [abi&bin](https://gitlab.newtonproject.org/hep/newswap-periphery/-/blob/develop/generate/UniswapV2Router02ABI.json)
 - WNEW
-  - devnet地址：0x202B1174Cb34ee1b3c36747901F16E8A29031684
+  - devnet地址：0x2678Fb6e5AF58f7b520aCe2Cd3A4F476b771C6f2
   - [abi&bin](https://gitlab.newtonproject.org/hep/newswap-periphery/-/blob/develop/generate/WNewABI.json)
 
 ## 添加流动性
