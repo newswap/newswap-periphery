@@ -15,7 +15,7 @@
 
 pragma solidity =0.6.6;
 
-contract WNEW9 {
+contract WETH9 {
     string public name     = "Wrapped NEW";
     string public symbol   = "WNEW";
     uint8  public decimals = 18;
