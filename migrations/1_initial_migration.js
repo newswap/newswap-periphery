@@ -24,11 +24,11 @@ module.exports = async function (deployer, network, accounts) {
 
   } else { //development
     console.log("deploy development");
-    var uniswapV2FactoryAddress = "0xeF68eC729A5aeD6067181e2E15436AEd19081228"; //本地truffle重启需要修改 
-    // await deployer.deploy(WNEW9);
-    // var wNEW = await WNEW9.deployed();
-    // var wNEWAddress = wNEW.address;
-    var wNEWAddress = "0x53d6188ccE03723e4954DCa87EF2dB28b72Bca18";
+    var uniswapV2FactoryAddress = "0x46E3810B27d49d26fad216172F4244D05003e6AD"; //本地truffle重启需要修改 
+    await deployer.deploy(WNEW9);
+    var wNEW = await WNEW9.deployed();
+    var wNEWAddress = wNEW.address;
+    // var wNEWAddress = "0x53d6188ccE03723e4954DCa87EF2dB28b72Bca18";
     console.log("wNEW:"+ wNEWAddress);
     await deployer.deploy(UniswapV2Router02, uniswapV2FactoryAddress, wNEWAddress);
   }

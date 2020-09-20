@@ -6,13 +6,14 @@ const IUniswapV2Factory = artifacts.require("IUniswapV2Factory");
 const IUniswapV2Pair = artifacts.require("IUniswapV2Pair");
 const UniswapV2Router02 = artifacts.require("UniswapV2Router02");
 const WNEW9 = artifacts.require("WNEW9");
+const TestRouter = artifacts.require("TestRouter");
 
 const MINIMUM_LIQUIDITY = 1000;
 
 let MT001, MT002;
 let uniswapV2Factory, uniswapV2Router02, wETH;
 let mt001And002PairAddress, ethAndMT001PairAddress;
-let deadline;
+let deadline, testRouter;
 
 contract('Liquidity', (accounts) => {
   // beforeEach(async () => {
@@ -28,6 +29,8 @@ contract('Liquidity', (accounts) => {
     var uniswapV2FactoryAddress = await uniswapV2Router02.factory();
     uniswapV2Factory = await IUniswapV2Factory.at(uniswapV2FactoryAddress);  
     console.log("uniswapV2FactoryAddress:"+uniswapV2FactoryAddress);
+
+    testRouter = await TestRouter.new();
 
     // deploy tokens
     MT002 = await NRC6.new("My Token 002", "MT002", 18, web3.utils.toWei("1000", 'ether'), accounts[0], {from: accounts[0]});
@@ -92,8 +95,8 @@ contract('Liquidity', (accounts) => {
 
     mt001And002PairAddress = await uniswapV2Factory.getPair(MT001.address, MT002.address);
     console.log("getPair:"+mt001And002PairAddress);
-    // TODO pairFor需要删除
-    var pairFor = await uniswapV2Router02.pairFor(MT001.address, MT002.address);
+
+    var pairFor = await testRouter.pairFor(uniswapV2Factory.address, MT001.address, MT002.address);
     console.log("pairFor:" + pairFor);
     assert.equal(pairFor, mt001And002PairAddress);
 
@@ -113,7 +116,7 @@ contract('Liquidity', (accounts) => {
     // console.log(tx.logs);
     ethAndMT001PairAddress = await uniswapV2Factory.getPair(MT001.address, wETH.address);
     // console.log(ethAndMT001PairAddress);
-    var pairFor = await uniswapV2Router02.pairFor(MT001.address, wETH.address);
+    var pairFor = await testRouter.pairFor(uniswapV2Factory.address, MT001.address, wETH.address);
     assert.equal(pairFor, ethAndMT001PairAddress);
 
     var uniswapV2Pair = await IUniswapV2Pair.at(ethAndMT001PairAddress);

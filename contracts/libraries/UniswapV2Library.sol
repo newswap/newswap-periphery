@@ -21,8 +21,8 @@ library UniswapV2Library {
                 hex'ff',
                 factory,
                 keccak256(abi.encodePacked(token0, token1)),
-                hex'9e412b0c43545320c5ffd072573387d3d24b01790dea161731c0e56efd7a76a2' // init code hash truffle编译UniswapV2Pair版本，放不同项目也不一样 TODO ?
-                // hex'96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f' // init code hash waffle编译UniswapV2Pair版本
+                hex'9e412b0c43545320c5ffd072573387d3d24b01790dea161731c0e56efd7a76a2'
+                // hex'96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f' // init code hash
             ))));
     }
 

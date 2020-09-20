@@ -6,11 +6,12 @@ const IUniswapV2Factory = artifacts.require("IUniswapV2Factory");
 const IUniswapV2Pair = artifacts.require("IUniswapV2Pair");
 const UniswapV2Router02 = artifacts.require("UniswapV2Router02");
 const WNEW9 = artifacts.require("WNEW9");
+const TestRouter = artifacts.require("TestRouter");
 
 let MT001, MT002;
 let uniswapV2Factory, uniswapV2Router02, wETH;
 let ethAndMT001PairAddress, ethAndMT002PairAddress;
-let deadline;
+let deadline, testRouter;
 
 // TODO 用于子图数据测试～～～不需要token-token交易对，只关注new-token交易对！！
 contract('Subgraph', (accounts) => {
@@ -22,6 +23,8 @@ contract('Subgraph', (accounts) => {
     var uniswapV2FactoryAddress = await uniswapV2Router02.factory();
     uniswapV2Factory = await IUniswapV2Factory.at(uniswapV2FactoryAddress);  
     console.log("uniswapV2FactoryAddress:"+uniswapV2FactoryAddress);
+
+    testRouter = await TestRouter.new();
 
     // deploy tokens
     MT001 = await NRC6.new("USDT", "USDT", 18, web3.utils.toWei("10000", 'ether'), accounts[0], {from: accounts[0]});
@@ -55,8 +58,7 @@ contract('Subgraph', (accounts) => {
 
     ethAndMT001PairAddress = await uniswapV2Factory.getPair(MT001.address, wETH.address);
     console.log("ethAndMT001PairAddress: " + ethAndMT001PairAddress);
-    // TODO pairFor需要删除
-    var pairFor = await uniswapV2Router02.pairFor(MT001.address, wETH.address);
+    var pairFor = await testRouter.pairFor(uniswapV2Factory.address, MT001.address, wETH.address);
     assert.equal(pairFor, ethAndMT001PairAddress);
 
     var uniswapV2Pair = await IUniswapV2Pair.at(ethAndMT001PairAddress);
@@ -76,8 +78,7 @@ contract('Subgraph', (accounts) => {
   //   var tx = await uniswapV2Router02.addLiquidityETH(MT002.address, tokenAmount, 0, 0, accounts[0], deadline, {value: ethAmount, gas: 3999999});
   //   ethAndMT002PairAddress = await uniswapV2Factory.getPair(MT002.address, wETH.address);
   //   console.log("ethAndMT002PairAddress: " + ethAndMT002PairAddress);
-  //   // TODO pairFor需要删除
-  //   var pairFor = await uniswapV2Router02.pairFor(MT002.address, wETH.address);
+  //   var pairFor = await testRouter.pairFor(uniswapV2Factory.address, MT002.address, wETH.address);
   //   assert.equal(pairFor, ethAndMT002PairAddress);
 
   //   var uniswapV2Pair = await IUniswapV2Pair.at(ethAndMT002PairAddress);

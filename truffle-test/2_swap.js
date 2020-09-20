@@ -6,11 +6,12 @@ const IUniswapV2Factory = artifacts.require("IUniswapV2Factory");
 const IUniswapV2Pair = artifacts.require("IUniswapV2Pair");
 const UniswapV2Router02 = artifacts.require("UniswapV2Router02");
 const WNEW9 = artifacts.require("WNEW9");
+const TestRouter = artifacts.require("TestRouter");
 
 let MT001, MT002, MT003;
 let uniswapV2Factory, uniswapV2Router02, wETH;
 let mt001And002PairAddress, mt002And003PairAddress, ethAndMT001PairAddress;
-let deadline;
+let deadline, testRouter;
 
 contract('SWAP', (accounts) => {
   // beforeEach(async () => {
@@ -23,6 +24,8 @@ contract('SWAP', (accounts) => {
     var uniswapV2FactoryAddress = await uniswapV2Router02.factory();
     uniswapV2Factory = await IUniswapV2Factory.at(uniswapV2FactoryAddress);  
     console.log("uniswapV2FactoryAddress:"+uniswapV2FactoryAddress);
+
+    testRouter = await TestRouter.new();
 
     // deploy tokens
     MT001 = await NRC6.new("My Token 001", "MT001", 18, web3.utils.toWei("1000", 'ether'), accounts[0], {from: accounts[0]});
@@ -66,7 +69,7 @@ contract('SWAP', (accounts) => {
     mt001And002PairAddress = await uniswapV2Factory.getPair(MT001.address, MT002.address);
     console.log("mt001And002PairAddress: " + mt001And002PairAddress);
 
-    var pairFor = await uniswapV2Router02.pairFor(MT001.address, MT002.address);
+    var pairFor = await testRouter.pairFor(uniswapV2Factory.address, MT001.address, MT002.address);
     assert.equal(mt001And002PairAddress,pairFor)
 
     var uniswapV2Pair = await IUniswapV2Pair.at(mt001And002PairAddress);
@@ -730,10 +733,6 @@ contract('SWAP', (accounts) => {
   //swapExactTokensForTokensSupportingFeeOnTransferTokens
   //swapExactETHForTokensSupportingFeeOnTransferTokens
   //swapExactTokensForETHSupportingFeeOnTransferTokens
-
-  // TODO 把uniswap都改写成truffle版本
-  // 最后检查下文档中的函数全都调用到了https://uniswap.org/docs/v2/smart-contracts/factory/
-
 
 });
 
